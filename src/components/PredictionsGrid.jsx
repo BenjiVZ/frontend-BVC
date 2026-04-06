@@ -56,6 +56,23 @@ export default function PredictionsGrid({ predictions }) {
                 <Signal label="MACD" value={p.macd_signal} />
                 <Signal label="REG" value={p.regression_signal} />
               </div>
+              <div className="pred-card__ai">
+                {p.gemini_signal ? (
+                  <>
+                    <div className="ai-header">
+                      <span className="ai-title">🤖 AI Gemini</span>
+                      <span className={`badge badge--${p.gemini_signal.toLowerCase()}`}>
+                        {p.gemini_signal}
+                      </span>
+                    </div>
+                    {p.gemini_reasoning && <p className="ai-reason">{p.gemini_reasoning}</p>}
+                  </>
+                ) : (
+                  <div className="ai-header">
+                    <span className="ai-title" style={{opacity: 0.5}}>🤖 Sin análisis IA</span>
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}

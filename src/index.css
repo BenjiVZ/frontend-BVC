@@ -821,6 +821,35 @@ body {
 .signal--down .signal__value { color: var(--signal-down); }
 .signal--neutral .signal__value { color: var(--signal-neutral); }
 
+/* AI Section */
+.pred-card__ai {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px dashed var(--edge-default);
+}
+
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-2);
+}
+
+.ai-title {
+  font-family: var(--font-data);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-secondary);
+  letter-spacing: 0.3px;
+}
+
+.ai-reason {
+  font-size: 11px;
+  color: var(--ink-secondary);
+  line-height: 1.4;
+  font-style: italic;
+}
+
 /* ============================================ */
 /*  FOOTER                                      */
 /* ============================================ */
