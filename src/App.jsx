@@ -6,7 +6,8 @@ import StockTable from './components/StockTable';
 import StockChart from './components/StockChart';
 import DollarChart from './components/DollarChart';
 import PredictionsGrid from './components/PredictionsGrid';
-import { useSummary, useStocks, useDollar, usePredictions, useStockHistory } from './hooks/useApi';
+import RecordsAnalytics from './components/RecordsAnalytics';
+import { useSummary, useStocks, useDollar, usePredictions, useStockHistory, useStocksHistory } from './hooks/useApi';
 import { useTheme } from './hooks/useTheme';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
   const { data: stocks, refetch: rStocks } = useStocks();
   const { data: dollar, refetch: rDollar } = useDollar();
   const { data: predictions, refetch: rPreds } = usePredictions();
+  const { data: stocksHistory } = useStocksHistory(30);
   const { data: stockHistory } = useStockHistory(
     selectedSymbol || stocks?.stocks?.[0]?.symbol || 'ABC.A'
   );
@@ -66,6 +68,13 @@ export default function App() {
           stocks={stocks}
           predictions={predictions}
           onSelectSymbol={setSelectedSymbol}
+          stocksHistory={stocksHistory}
+        />
+
+        <RecordsAnalytics
+          stocks={stocks}
+          predictions={predictions}
+          stockHistory={stockHistory}
         />
 
         <PredictionsGrid predictions={predictions} />

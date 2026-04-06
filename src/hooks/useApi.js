@@ -43,3 +43,7 @@ export function usePredictions() {
 export function useStockHistory(symbol, days = 90) {
   return useApi(() => api.getStockHistory(symbol, days), [symbol, days]);
 }
+
+export function useStocksHistory(days = 30) {
+  return useApi(() => api.getStocksHistory(days), [days]);
+}

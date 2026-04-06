@@ -14,6 +14,8 @@ export const api = {
   getStocks: () => request('/stocks/'),
   getStockHistory: (symbol, days = 90) =>
     request(`/stock/${symbol}/history/?days=${days}`),
+  getStocksHistory: (days = 30) =>
+    request(`/stocks/history/?days=${days}`),
   getDollar: () => request('/dollar/'),
   getPredictions: () => request('/predictions/'),
   getSummary: () => request('/summary/'),

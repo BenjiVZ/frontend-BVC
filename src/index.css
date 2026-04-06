@@ -630,6 +630,42 @@ body {
 }
 
 /* ============================================ */
+/*  SPARKLINE — inline trend mini-charts        */
+/* ============================================ */
+.sparkline-cell {
+  padding-top: var(--sp-1) !important;
+  padding-bottom: var(--sp-1) !important;
+  width: 140px;
+  min-width: 120px;
+}
+
+.sparkline-container {
+  display: inline-block;
+  line-height: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: opacity var(--transition-fast);
+}
+
+.sparkline-container:hover {
+  opacity: 0.8;
+}
+
+.sparkline-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 11px;
+}
+
+/* Override recharts internals for sparkline */
+.sparkline-container .recharts-wrapper {
+  cursor: default !important;
+}
+
+/* ============================================ */
 /*  TEXT HELPERS                                 */
 /* ============================================ */
 .text-up { color: var(--signal-up) !important; }
@@ -910,6 +946,218 @@ body,
     background-color 300ms ease,
     color 300ms ease,
     border-color 300ms ease;
+}
+
+/* ============================================ */
+/*  ANALYTICS SECTION                           */
+/* ============================================ */
+.analytics-section {
+  margin-bottom: var(--sp-8);
+}
+
+.analytics-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-6);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--edge-default);
+}
+
+.analytics-section__header .section-title {
+  font-size: 15px;
+  letter-spacing: 0.8px;
+}
+
+.analytics-section__badge {
+  font-family: var(--font-data);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid rgba(34, 197, 94, 0.20);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.3px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Stats Grid ─── */
+.analytics-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--edge-subtle);
+  border: 1px solid var(--edge-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--sp-6);
+}
+
+.analytics-stat {
+  background: var(--surface-1);
+  padding: var(--sp-4) var(--sp-4);
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition-fast);
+}
+
+.analytics-stat:hover {
+  background: var(--surface-2);
+}
+
+.analytics-stat__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.analytics-stat:hover .analytics-stat__bar {
+  opacity: 1;
+}
+
+.analytics-stat__label {
+  font-size: 10px;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  margin-bottom: var(--sp-1);
+}
+
+.analytics-stat__value {
+  font-family: var(--font-data);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+/* ─── Chart Grid ─── */
+.analytics-grid {
+  display: grid;
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-6);
+}
+
+.analytics-grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.analytics-grid--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* ─── Chart Card ─── */
+.analytics-chart-card {
+  background: var(--surface-1);
+  border: 1px solid var(--edge-default);
+  border-radius: var(--radius-md);
+  padding: var(--sp-5);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.analytics-chart-card:hover {
+  border-color: var(--edge-strong);
+}
+
+.analytics-chart-card .section-title {
+  margin-bottom: var(--sp-4);
+}
+
+/* ─── Pie Charts ─── */
+.pie-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+.pie-section {
+  text-align: center;
+}
+
+.pie-subtitle {
+  font-family: var(--font-data);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--sp-2);
+}
+
+.pie-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+
+.pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-data);
+  font-size: 10px;
+  color: var(--ink-secondary);
+  font-weight: 500;
+}
+
+.pie-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ─── Recharts Legend Override ─── */
+.analytics-chart-card .recharts-legend-wrapper {
+  font-family: var(--font-data) !important;
+}
+
+.analytics-chart-card .recharts-legend-item-text {
+  color: var(--ink-secondary) !important;
+  font-size: 11px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1280px) {
+  .analytics-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .analytics-grid--2 {
+    grid-template-columns: 1fr;
+  }
+  .analytics-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .analytics-stat__value {
+    font-size: 15px;
+  }
+  .pie-charts-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-stats-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================ */

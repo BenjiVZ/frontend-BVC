@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react';
 import { IconBarChart } from './Icons';
+import Sparkline from './Sparkline';
 
-export default function StockTable({ stocks, predictions, onSelectSymbol }) {
+export default function StockTable({ stocks, predictions, onSelectSymbol, stocksHistory }) {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('symbol');
   const [sortDir, setSortDir] = useState('asc');
@@ -12,6 +13,16 @@ export default function StockTable({ stocks, predictions, onSelectSymbol }) {
     predictions.predictions.forEach(p => { map[p.symbol] = p; });
     return map;
   }, [predictions]);
+
+  /* Build a map: symbol → array of {price_bs, date, ...} from history endpoint */
+  const historyMap = useMemo(() => {
+    if (!stocksHistory?.history) return {};
+    const map = {};
+    stocksHistory.history.forEach(entry => {
+      map[entry.symbol] = entry.data; // [{date, price_bs, ...}, ...]
+    });
+    return map;
+  }, [stocksHistory]);
 
   const filtered = useMemo(() => {
     if (!stocks?.stocks) return [];
@@ -65,6 +76,7 @@ export default function StockTable({ stocks, predictions, onSelectSymbol }) {
               <th onClick={() => handleSort('effective_amount')}>Monto{arrow('effective_amount')}</th>
               <th onClick={() => handleSort('shares_traded')}>Títulos{arrow('shares_traded')}</th>
               <th>Señal</th>
+              <th>Tendencia</th>
             </tr>
           </thead>
           <tbody>
@@ -72,6 +84,7 @@ export default function StockTable({ stocks, predictions, onSelectSymbol }) {
               const pred = predMap[s.symbol];
               const varClass = s.variation > 0 ? 'text-up' : (s.variation < 0 ? 'text-down' : 'text-neutral');
               const predDir = pred?.predicted_direction || 'NEUTRAL';
+              const histData = historyMap[s.symbol] || [];
 
               return (
                 <tr key={s.id} onClick={() => onSelectSymbol?.(s.symbol)}>
@@ -90,6 +103,9 @@ export default function StockTable({ stocks, predictions, onSelectSymbol }) {
                       {predDir === 'UP' ? '▲' : (predDir === 'DOWN' ? '▼' : '—')}{' '}
                       {predDir} {pred?.confidence?.toFixed(0) || 0}%
                     </span>
+                  </td>
+                  <td className="sparkline-cell">
+                    <Sparkline data={histData} width={120} height={36} />
                   </td>
                 </tr>
               );
