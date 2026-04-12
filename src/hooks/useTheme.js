@@ -4,8 +4,8 @@ function getInitialTheme() {
   const stored = localStorage.getItem('bvc-theme');
   if (stored === 'light' || stored === 'dark') return stored;
   // Respect system preference
-  if (window.matchMedia?.('(prefers-color-scheme: light)').matches) return 'light';
-  return 'dark';
+  if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) return 'dark';
+  return 'light';
 }
 
 export function useTheme() {
